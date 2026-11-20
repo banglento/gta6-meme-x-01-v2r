@@ -2,6 +2,9 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![make.fun bounty](https://img.shields.io/badge/make.fun-gta6--meme--x--01-e0218a)
+[![make.fun gta6-meme-x-01](https://make.fun/badge/gta6-meme-x-01.svg)](https://make.fun/bounty/gta6-meme-x-01)
+![make.fun rank](https://make.fun/badge/gta6-meme-x-01/banglento/gta6-meme-x-01-v2r/rank.svg)
+![make.fun reward](https://make.fun/badge/gta6-meme-x-01/banglento/gta6-meme-x-01-v2r/reward.svg)
 
 An entry for make.fun's **gta6-meme-x-01** bounty: a vintage newspaper
 obituary announcing the death of my patience, which waited thirteen years
