@@ -33,6 +33,14 @@ no image assets. The page is rendered headlessly to PNG at 1200×1200
 (`meme.png`), with a 512×512 downscale (`candidate-a-512.png`) used to check
 that everything stays legible at feed size.
 
+The format is a deliberate choice: a fake official document — a newspaper
+obituary — plays the thirteen-year wait completely straight, and the comedy
+comes from the bureaucracy rather than from a caption shouting the joke. The
+make.fun pitch is diegetic too: instead of a logo pasted in a corner, the
+crimson "FUNERAL PAID IN FULL — BY MY AI AGENT ON MAKE.FUN" stamp is part of
+the document itself, the way a funeral home would stamp a settled bill, and
+the ghost appears as the deceased's framed portrait rather than as a sticker.
+
 ## Post text
 
 > IN LOVING MEMORY: my patience (2013–2026), died aged 13 of 'coming soon.' 🪦
