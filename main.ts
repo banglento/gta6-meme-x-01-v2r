@@ -6,24 +6,28 @@
 // /output and /tmp are writable). So instead of re-rendering the meme, this
 // entrypoint verifies that the committed artifact set is complete and
 // internally consistent, prints one line per check, optionally writes a JSON
-// report, and exits 0 only when every check passes.
+// report, and exits 0 only when every check passes. It also copies POST.json
+// from the repository to the output directory, where the gate reads it.
 //
 // Pure Node.js builtins (fs, path, crypto) — zero dependencies, and it never
 // writes into the repository directory.
 //
 // Environment:
 //   MAKEFUN_BOT_DIR    repo directory (defaults to this script's directory)
-//   MAKEFUN_OUTPUT_DIR if set, a JSON report is written to
-//                      $MAKEFUN_OUTPUT_DIR/report.json
+//   MAKEFUN_OUTPUT_DIR the output directory (defaults to /output): POST.json
+//                      is copied there, where the gate reads it, and a JSON
+//                      report is written to $MAKEFUN_OUTPUT_DIR/report.json
 
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = process.env.MAKEFUN_BOT_DIR
   ? process.env.MAKEFUN_BOT_DIR
   : dirname(fileURLToPath(import.meta.url));
+
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
 const PNG_SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 
@@ -161,6 +165,21 @@ if (!postJsonBuf) {
     record("POST.json", false, `url is not an x.com status URL: ${JSON.stringify(parsed.url)}`);
   } else {
     record("POST.json", true, `url is ${parsed.url}`);
+  }
+}
+
+// 7. POST.json copy to output: the gate scorer reads POST.json from the
+// output directory, so copy the repository's POST.json there.
+if (!postJsonBuf) {
+  record("POST.json copy to output", false, "cannot copy: POST.json is missing");
+} else {
+  const dest = join(outputDir, "POST.json");
+  try {
+    mkdirSync(outputDir, { recursive: true });
+    copyFileSync(join(root, "POST.json"), dest);
+    record("POST.json copy to output", true, `copied to ${dest}`);
+  } catch (err) {
+    record("POST.json copy to output", false, err.message);
   }
 }
 
